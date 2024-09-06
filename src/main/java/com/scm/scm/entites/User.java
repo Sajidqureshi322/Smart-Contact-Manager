@@ -37,6 +37,7 @@ public class User {
     private boolean phoneVerified = false;
 
     //Self, google, linkedin ,facebook ,twitter
+    @Enumerated
     private Providers provider=Providers.SELF;
     private String providerUserId;
 
