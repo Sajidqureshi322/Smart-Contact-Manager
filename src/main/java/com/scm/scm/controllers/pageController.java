@@ -1,9 +1,5 @@
 package com.scm.scm.controllers;
 
-import com.scm.scm.entites.Providers;
-import com.scm.scm.entites.User;
-import com.scm.scm.services.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,9 +12,6 @@ import com.scm.scm.forms.UserForm;
 
 @Controller
 public class pageController {
-
-    @Autowired
-    private UserService userService;
 
     @RequestMapping("/home")
     public String home(Model model){
@@ -74,26 +67,16 @@ public class pageController {
     @RequestMapping(value = "/do-register",method = RequestMethod.POST)
     public String processRegister(@ModelAttribute UserForm userForm){
         System.out.println("processing registration");
+        //fetch form data 
         System.out.println(userForm);
-        //fetch form data
+
         //validate form data
+
         //save to database
-        //user service
-        // UserForm -> user
-        User user = User.builder()
-                .name(userForm.getName())
-                .email(userForm.getEmail())
-                .password(userForm.getPassword())
-                .about(userForm.getAbout())
-                .phoneNumber(userForm.getPhoneNumber())
-                .profilePic("https://upload.wikimedia.org/wikipedia/commons/a/ac/Default_pfp.jpg?20200418092106")
-                .provider(Providers.SELF)  // Ensure this is set
-                .build();
-        User savedUser = userService.saveUser(user);
-        System.out.println("user saved");
+        userService 
         //message = "Registration successful"
         //redirect to login page
-        return "redirect:/register";
+        return "redirect:/register";  
     }
-
+    
 }
