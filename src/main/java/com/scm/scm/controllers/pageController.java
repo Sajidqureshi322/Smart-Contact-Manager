@@ -2,7 +2,10 @@ package com.scm.scm.controllers;
 
 import com.scm.scm.entites.Providers;
 import com.scm.scm.entites.User;
+import com.scm.scm.helpers.Message;
+import com.scm.scm.helpers.MessageType;
 import com.scm.scm.services.UserService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -71,7 +74,7 @@ public class pageController {
     //processing register
 
     @RequestMapping(value = "/do-register", method = RequestMethod.POST)
-    public String processRegister(@ModelAttribute UserForm userForm) {
+    public String processRegister(@ModelAttribute UserForm userForm, HttpSession session) {
         System.out.println("Processing registration");
         // fetch form data
         // UserForm
@@ -85,16 +88,23 @@ public class pageController {
         // userservice
 
         // UserForm--> User
-        User user = User.builder()
-                .name(userForm.getName())
-                .email(userForm.getEmail())
-                .password(userForm.getPassword())
-                .about(userForm.getAbout())
-                .phoneNumber(userForm.getPhoneNumber())
-                .provider(Providers.SELF)
-                .profilePic(
-                        "https://www.learncodewithdurgesh.com/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fdurgesh_sir.35c6cb78.webp&w=1920&q=75")
-                .build();
+//        User user = User.builder()
+//                .name(userForm.getName())
+//                .email(userForm.getEmail())
+//                .password(userForm.getPassword())
+//                .about(userForm.getAbout())
+//                .phoneNumber(userForm.getPhoneNumber())
+//                .provider(Providers.SELF)
+//                .profilePic(
+//                        "https://www.learncodewithdurgesh.com/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fdurgesh_sir.35c6cb78.webp&w=1920&q=75")
+//                .build();
+        User user = new User();
+        user.setName(userForm.getName());
+        user.setEmail(userForm.getEmail());
+        user.setPassword(userForm.getPassword());
+        user.setAbout(userForm.getAbout());
+        user.setPhoneNumber(userForm.getPhoneNumber());
+        user.setProfilePic("https://upload.wikimedia.org/wikipedia/commons/a/ac/Default_pfp.jpg?20200418092106");
 
         User savedUser = userService.saveUser(user);
 
@@ -102,7 +112,11 @@ public class pageController {
 
         // message = "Registration Successful"
 
-        // redirectto login page
+        //add the message
+        Message message = Message.builder().content("Registration successful").type(MessageType.blue).build();
+
+        session.setAttribute("message",message);
+        // redirect to login page
         return "redirect:/register";
     }
     
