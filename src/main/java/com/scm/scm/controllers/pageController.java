@@ -1,5 +1,8 @@
 package com.scm.scm.controllers;
 
+import com.scm.scm.entites.Providers;
+import com.scm.scm.entites.User;
+import com.scm.scm.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -7,11 +10,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
-import com.scm.scm.entites.Providers;
-import com.scm.scm.entites.User;
 import com.scm.scm.forms.UserForm;
-import com.scm.scm.services.UserService;
 
 @Controller
 public class pageController {
@@ -69,17 +70,19 @@ public class pageController {
 
     //processing register
 
-    @RequestMapping(value = "/do-register",method = RequestMethod.POST)
-    public String processRegister(@ModelAttribute UserForm userForm){
+    @RequestMapping(value = "/do-register", method = RequestMethod.POST)
+    public String processRegister(@ModelAttribute UserForm userForm) {
         System.out.println("Processing registration");
         // fetch form data
         // UserForm
         System.out.println(userForm);
 
         // validate form data
-//         TODO::Validate userForm
+        // TODO::Validate userForm[Next Video]
 
         // save to database
+
+        // userservice
 
         // UserForm--> User
         User user = User.builder()
@@ -100,7 +103,7 @@ public class pageController {
         // message = "Registration Successful"
 
         // redirectto login page
-        return "redirect:/register";  
+        return "redirect:/register";
     }
     
 }
