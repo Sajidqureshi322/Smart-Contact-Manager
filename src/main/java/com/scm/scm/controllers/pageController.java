@@ -22,6 +22,10 @@ import com.scm.scm.forms.UserForm;
 @Controller
 public class pageController {
 
+    @GetMapping("/")
+    public String index(){
+        return "redirect:/home";
+    }
     @Autowired
     private UserService userService;
     @RequestMapping("/home")
